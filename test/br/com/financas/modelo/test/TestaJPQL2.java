@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import br.com.financas.modelo.Conta;
+import br.com.financas.modelo.Categoria;
 import br.com.financas.modelo.Movimentacao;
 import br.com.financas.util.JPAUtil;
 
@@ -15,12 +15,13 @@ public class TestaJPQL2 {
 
 		EntityManager em = new JPAUtil().getEntityManager();
 
-		Conta conta = new Conta();
-		conta.setId(new Integer(2));
-		String quey_jpql = "select m from Movimentacao m where id = :contaId";
+		@SuppressWarnings("deprecation")
+		Categoria categoria = new Categoria();
+		categoria.setId(1);
+		String quey_jpql = "select m from Movimentacao m join m.categoria c where c = :pCategoria";
 
 		Query query = em.createQuery(quey_jpql);
-		query.setParameter("contaId", conta.getId());
+		query.setParameter("pCategoria", categoria);
 
 		em.getTransaction().begin();
 
